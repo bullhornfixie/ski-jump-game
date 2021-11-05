@@ -11,11 +11,10 @@ It's an ambitous project with a lot of hurdles to overcome!
 
 ### Create a slope 
 
-**Goal** <br>
+**Goal** <br/>
 Create a plane which faces the camera head on and inclines. 
 
 **Solution** <br>
-This was relatively simple: 
 - Rectangular plane `15 x 20`
 - Move camera higher up `camera.position.y = 12`
 - Zoom camera out `camera.position.z = 6`

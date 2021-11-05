@@ -1,4 +1,4 @@
-# Ski Jumping Game :snowflake: :ski:
+# Ski Jump Game :snowflake: :ski:
 
 ## Intro
 This project was born from my Three.js journey. In this course I come across a library called `cannon.js` to use physics in a three.js scene. Loaded with new knowledge and curiousity, I wanted to create my own project which encapsulates physics and 3D graphics. 

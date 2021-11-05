@@ -1,4 +1,4 @@
-# Ski Jump 
+# Ski Jumping Game
 
 ## Intro 
 This project was born from my Three.js journey. In this course I come across a library called `cannon.js` to use physics in a three.js scene. Loaded with new knowledge and curiousity, I wanted to create my own project which encapsulates physics and 3D graphics. 
@@ -11,7 +11,7 @@ It's an ambitous project with a lot of hurdles to overcome!
 
 ### Create a slope 
 
-**Goal** <br/>
+**Goal** <br>
 Create a plane which faces the camera head on and inclines. 
 
 **Solution** <br>
@@ -38,7 +38,7 @@ Boom! ball is at top of slope and rolls down towards camera.
 ### Camera follows ball
 
 **Goal** <br>
-Currently, the game ski slope is short and thus, the game will be short. The camera is fixed in a single position so if I make the skip slope longer, the player won't be able to see the skier when it's out of view. 
+Currently, the game ski slope is short and thus, the game will be short. The camera is fixed in a single position. Som if I make the ski slope longer, the player won't be able to see the skier when it's out of view. 
 
 I need to extend the length of the plane and get the camera to follow the ball as it rolls down. 
 

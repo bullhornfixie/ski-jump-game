@@ -11,10 +11,10 @@ It's an ambitous project with a lot of hurdles to overcome!
 
 ### Create a slope 
 
-**Goal**
+**Goal** <br>
 Create a plane which faces the camera head on and inclines. 
 
-**Solution**
+**Solution** 
 This was relatively simple: <br>
 - Rectangular plane `15 x 20`
 - Move camera higher up `camera.position.y = 12`
@@ -23,10 +23,10 @@ This was relatively simple: <br>
 
 ### Ball to roll down slope 
 
-**Goal**
+**Goal** <br>
 Implement physics to scene and test with a ball rolling down the slope.
 
-**Solution**
+**Solution** 
 - Create a ball in 3D and physics world 
 - Give the ball mass
 - Reduce gravity in `CANNON.World()` to -189.82
@@ -38,7 +38,7 @@ Boom! ball is at top of slope and rolls down towards camera.
 
 ### Camera follows ball
 
-**Goal** 
+**Goal** <br>
 Currently, the game ski slope is short and thus, the game will be short. The camera is fixed in a single position so if I make the skip slope longer, the player won't be able to see the skier when it's out of view. 
 
 I need to extend the length of the plane and get the camera to follow the ball as it rolls down. 

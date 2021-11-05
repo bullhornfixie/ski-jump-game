@@ -5,6 +5,7 @@ import * as dat from 'dat.gui'
 import CANNON from 'cannon'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
+import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
 
 // console.log(CANNON)
 
@@ -32,30 +33,41 @@ const texture = new THREE.TextureLoader().load(
 )
 
 // Models 
-const dracoLoader = new DRACOLoader()
-dracoLoader.setDecoderPath('/draco/')
+// const dracoLoader = new DRACOLoader()
+// dracoLoader.setDecoderPath('/draco/')
 
-const gltfLoader = new GLTFLoader()
-gltfLoader.setDRACOLoader(dracoLoader)
+// const gltfLoader = new GLTFLoader()
+// gltfLoader.setDRACOLoader(dracoLoader)
 
-let mixer = null
+// let mixer = null
 
-gltfLoader.load(
-   '/models/Fox/glTF/Fox.gltf',
-  (gltf) =>
-  {
-    console.log(gltf)
+// gltfLoader.load(
+//    '/models/Fox/glTF/Fox.gltf',
+//   (gltf) =>
+//   {
+//     console.log(gltf)
 
-    mixer = new THREE.AnimationMixer(gltf.scene)
-    const action = mixer.clipAction(gltf.animations[0])
+//     mixer = new THREE.AnimationMixer(gltf.scene)
+//     const action = mixer.clipAction(gltf.animations[0])
 
-    action.play()
+//     action.play()
 
-    gltf.scene.scale.set(0.025, 0.025, 0.025)
-    gltf.scene.position.x = -2
-    scene.add(gltf.scene)
+//     gltf.scene.scale.set(0.025, 0.025, 0.025)
+//     gltf.scene.position.x = -2
+//     scene.add(gltf.scene)
 
-    console.log(gltf.scene)
+//     console.log(gltf.scene)
+//   }
+// )
+
+const fbxLoader = new FBXLoader()
+fbxLoader.load(
+  '/models/tree.fbx',
+  (object) => {
+    console.log(object)
+    object.scale.set(0.002, 0.002, 0.002)
+    object.position.x = -2
+    scene.add(object)
   }
 )
 
@@ -105,7 +117,7 @@ const floor = new THREE.Mesh(
     })
 )
 floor.receiveShadow = true
-floor.rotation.x = - Math.PI * 0.5 - 0.02
+floor.rotation.x = - Math.PI * 0.5 - 0.01
 scene.add(floor)
 
 // Lights 
@@ -146,7 +158,7 @@ window.addEventListener('resize', () =>
 
 // Camera 
 const camera = new THREE.PerspectiveCamera(100, sizes.width / sizes.height, 0.1, 100)
-camera.position.set(0, 12, 6)
+camera.position.set(0, 5, 11)
 scene.add(camera)
 
 // Controls
@@ -220,9 +232,9 @@ const tick = () =>
     }
 
     // Update mixer 
-    if(mixer !== null) {
-      mixer.update(deltaTime)
-    }
+    // if(mixer !== null) {
+    //   mixer.update(deltaTime)
+    // }
     
     // Update controls
     controls.update()

@@ -3,6 +3,8 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'dat.gui'
 import CANNON from 'cannon'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 
 // console.log(CANNON)
 
@@ -27,6 +29,34 @@ const scene = new THREE.Scene()
 // Textures 
 const texture = new THREE.TextureLoader().load(
   './textures/snow-texture.jpg'
+)
+
+// Models 
+const dracoLoader = new DRACOLoader()
+dracoLoader.setDecoderPath('/draco/')
+
+const gltfLoader = new GLTFLoader()
+gltfLoader.setDRACOLoader(dracoLoader)
+
+let mixer = null
+
+gltfLoader.load(
+   '/models/Fox/glTF/Fox.gltf',
+  (gltf) =>
+  {
+    console.log(gltf)
+
+    mixer = new THREE.AnimationMixer(gltf.scene)
+    const action = mixer.clipAction(gltf.animations[0])
+
+    action.play()
+
+    gltf.scene.scale.set(0.025, 0.025, 0.025)
+    gltf.scene.position.x = -2
+    scene.add(gltf.scene)
+
+    console.log(gltf.scene)
+  }
 )
 
 
@@ -187,6 +217,11 @@ const tick = () =>
     for(const object of objectsToUpdate)
     {
       object.mesh.position.copy(object.body.position)
+    }
+
+    // Update mixer 
+    if(mixer !== null) {
+      mixer.update(deltaTime)
     }
     
     // Update controls

@@ -25,23 +25,16 @@ const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
 
 // Textures 
-const textureLoader = new THREE.TextureLoader()
-const cubeTextureLoader = new THREE.CubeTextureLoader()
+const texture = new THREE.TextureLoader().load(
+  './textures/snow-texture.jpg'
+)
 
-const environmentMapTexture = cubeTextureLoader.load([
-    '/textures/environmentMaps/0/px.png',
-    '/textures/environmentMaps/0/nx.png',
-    '/textures/environmentMaps/0/py.png',
-    '/textures/environmentMaps/0/ny.png',
-    '/textures/environmentMaps/0/pz.png',
-    '/textures/environmentMaps/0/nz.png'
-])
 
 // Physics 
 
 // World 
 const world = new CANNON.World()
-world.gravity.set(0, 0, 0) // Vec3 Class is same as Vector3 but for physics
+world.gravity.set(0, -100, 0) // Vec3 Class is same as Vector3 but for physics
 
 
 // What happens when plastic collides with concrete 
@@ -75,10 +68,10 @@ world.addBody(floorBody)
 const floor = new THREE.Mesh(
     new THREE.PlaneGeometry(15, 20), // width / height 
     new THREE.MeshStandardMaterial({
-        color: '#777777',
+        color: '#ffffff',
         metalness: 0.3,
         roughness: 0.4,
-        envMap: environmentMapTexture
+        map: texture
     })
 )
 floor.receiveShadow = true
@@ -86,7 +79,7 @@ floor.rotation.x = - Math.PI * 0.5 - 0.02
 scene.add(floor)
 
 // Lights 
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.7)
+const ambientLight = new THREE.AmbientLight(0xffffff, 1.2)
 scene.add(ambientLight)
 
 const directionalLight = new THREE.DirectionalLight(0xffffff, 0.2)
@@ -144,11 +137,10 @@ const objectsToUpdate = []
 
 const sphereGeometry = new THREE.SphereBufferGeometry(1, 20, 20)
 const sphereMaterial = new THREE.MeshStandardMaterial({
-    metalness: 0.3,
-    roughness: 0.4,
-    envMap: environmentMapTexture
+    metalness: 0.4,
+    roughness: 0.1,
+    color: 'blue'
 })
-
 
 const createSphere = (radius, position) => {
 

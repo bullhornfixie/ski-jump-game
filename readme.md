@@ -1,4 +1,4 @@
-# Ski Jumping Game :smile:
+# Ski Jumping Game :snowflake: :ski:
 
 ## Intro 
 This project was born from my Three.js journey. In this course I come across a library called `cannon.js` to use physics in a three.js scene. Loaded with new knowledge and curiousity, I wanted to create my own project which encapsulates physics and 3D graphics. 
@@ -43,3 +43,6 @@ Currently, the game ski slope is short and thus, the game will be short. The cam
 I need to extend the length of the plane and get the camera to follow the ball as it rolls down. 
 
 This ball will eventually become a 3D skier model or a sledge - see how complex the modelling is for both options. Main thing is to get the physics working. # ski-jumping-game
+
+## Resources 
+[emoji cheatsheet for markdown](https://github.com/ikatyang/emoji-cheat-sheet/blob/master/README.md#sport)

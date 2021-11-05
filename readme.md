@@ -1,6 +1,6 @@
 # Ski Jumping Game :snowflake: :ski:
 
-## Intro 
+<span style="color:blue" size='20px'>Intro</span>.
 This project was born from my Three.js journey. In this course I come across a library called `cannon.js` to use physics in a three.js scene. Loaded with new knowledge and curiousity, I wanted to create my own project which encapsulates physics and 3D graphics. 
 
 My goal is to create a fun game where the player starts at the top of ski slope and has to manoeuvre between the trees and hit the ski jump at the end successfully. Turning and hitting trees will reduce speed and the distance cleared on launching from ski jump, thus reducing game points. 

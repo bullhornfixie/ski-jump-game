@@ -23,7 +23,7 @@ Create a plane which faces the camera head on and inclines.
 - Rectangular plane `15 x 20`
 - Move camera higher up `camera.position.y = 12`
 - Zoom camera out `camera.position.z = 6`
-- Adjust angle of floor plane in 3D world and physics would by -0.02
+- Adjust angle of floor plane in 3D world and physics world by -0.02
 
 ### Ball to roll down slope 
 
@@ -47,7 +47,7 @@ Currently, the game ski slope is short and thus, the game will be short. The cam
 
 I need to extend the length of the plane and get the camera to follow the ball as it rolls down. 
 
-This ball will eventually become a 3D skier model or a sledge - see how complex the modelling is for both options. Main thing is to get the physics working. # ski-jumping-game
+This ball will eventually become a 3D skier model or a sledge. Let's see how complex the modelling is for both options. Main thing is to get the physics working.
 
 ## Resources 
 [emoji cheatsheet for markdown](https://github.com/ikatyang/emoji-cheat-sheet/blob/master/README.md#sport)

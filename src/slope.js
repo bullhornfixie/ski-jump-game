@@ -160,21 +160,40 @@ rampBody.quaternion.setFromAxisAngle(
 world.addBody(rampBody)
 
 // Ramp 3D 
+// const ramp = new THREE.Mesh(
+//   new THREE.PlaneGeometry(4, 30), // width / height 
+//   new THREE.MeshStandardMaterial({
+//     color: '#000000',
+//     metalness: 0.3,
+//     roughness: 0.4,
+//     map: texture
+//   }
+//  )
+// )
+// ramp.rotation.x = -1.7
+// ramp.rotation.y = 0
+// ramp.rotation.z = 0
+
+// scene.add(ramp)
+
+// BoxRamp 3D
 const ramp = new THREE.Mesh(
-  new THREE.PlaneGeometry(4, 30), // width / height 
+  new THREE.BoxBufferGeometry(2, 2, 2), // width / height 
   new THREE.MeshStandardMaterial({
     color: '#000000',
     metalness: 0.3,
     roughness: 0.4,
-    map: texture
   }
  )
 )
-ramp.rotation.x = -1.7
+ramp.rotation.x = -0.5
 ramp.rotation.y = 0
 ramp.rotation.z = 0
 
+ramp.position.y = -0.5
+
 scene.add(ramp)
+
 
 
 // Lights 

@@ -6,6 +6,8 @@ import CANNON from 'cannon'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
+import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader'
 
 // console.log(CANNON)
 
@@ -33,44 +35,25 @@ const texture = new THREE.TextureLoader().load(
 )
 
 // Models 
-// const dracoLoader = new DRACOLoader()
-// dracoLoader.setDecoderPath('/draco/')
 
-// const gltfLoader = new GLTFLoader()
-// gltfLoader.setDRACOLoader(dracoLoader)
+const mtlLoader = new MTLLoader()
 
-// let mixer = null
+mtlLoader.load(
+  '/models/Tree/Forest_Assets_obj/Forest Assets.mtl',
+  (materials) => {
+    materials.preload()
+    console.log(materials)
 
-// gltfLoader.load(
-//    '/models/Fox/glTF/Fox.gltf',
-//   (gltf) =>
-//   {
-//     console.log(gltf)
-
-//     mixer = new THREE.AnimationMixer(gltf.scene)
-//     const action = mixer.clipAction(gltf.animations[0])
-
-//     action.play()
-
-//     gltf.scene.scale.set(0.025, 0.025, 0.025)
-//     gltf.scene.position.x = -2
-//     scene.add(gltf.scene)
-
-//     console.log(gltf.scene)
-//   }
-// )
-
-const fbxLoader = new FBXLoader()
-fbxLoader.load(
-  '/models/tree.fbx',
-  (object) => {
-    console.log(object)
-    object.scale.set(0.002, 0.002, 0.002)
-    object.position.x = -2
-    scene.add(object)
+    const objLoader = new OBJLoader()
+    objLoader.setMaterials( materials )
+    objLoader.load(
+      '/models/Tree/Forest_Assets_obj/Forest Assets.obj',
+      (object) => {
+        scene.add(object)
+      }
+    )
   }
 )
-
 
 // Physics 
 

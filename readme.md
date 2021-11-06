@@ -40,6 +40,29 @@ Implement physics to scene and test with a ball rolling down the slope.
 
 Boom! ball is at top of slope and rolls down towards camera. 
 
+### Import 3D models to scene 
+
+```
+const mtlLoader = new MTLLoader()
+
+mtlLoader.load(
+  '/models/Tree/Forest_Assets_obj/Forest Assets.mtl',
+  (materials) => {
+    materials.preload()
+    console.log(materials)
+
+    const objLoader = new OBJLoader()
+    objLoader.setMaterials( materials )
+    objLoader.load(
+      '/models/Tree/Forest_Assets_obj/Forest Assets.obj',
+      (object) => {
+        scene.add(object)
+      }
+    )
+  }
+)
+```
+
 ### Camera follows ball
 
 **Goal** <br>

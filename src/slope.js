@@ -15,15 +15,16 @@ const ballDropPosition = {x: 0, y: 2, z: -30}
 // GUI
 const gui = new dat.GUI()
 const debugObject = {}
+
 debugObject.createSphere = () => {
-    createSphere(
-        Math.random() * 0.5,
-        {
-          x: ballDropPosition.x,
-          y: ballDropPosition.y,
-          z: ballDropPosition.z,
-        }
-    )
+  createSphere(
+    Math.random() * 0.5,
+    {
+      x: ballDropPosition.x,
+      y: ballDropPosition.y,
+      z: ballDropPosition.z,
+    }
+  )
 }
 gui.add(debugObject, 'createSphere')
 
@@ -61,7 +62,6 @@ mtlLoader.load(
         getMeshes = [...object.children]
 
         addModels({x: -5, y: -1, z: 0})
-
      }       
     )
    }
@@ -124,14 +124,16 @@ world.addBody(floorBody)
 
 // Floor 
 const floor = new THREE.Mesh(
-    new THREE.PlaneGeometry(15, 100), // width / height 
-    new THREE.MeshStandardMaterial({
-        color: '#ffffff',
-        metalness: 0.3,
-        roughness: 0.4,
-        map: texture
-    })
+  new THREE.PlaneGeometry(15, 100), // width / height 
+  new THREE.MeshStandardMaterial({
+    color: '#ffffff',
+    metalness: 0.3,
+    roughness: 0.4,
+    map: texture
+  }
+ )
 )
+
 floor.receiveShadow = true
 floor.rotation.x = - Math.PI * 0.5 + gradient
 scene.add(floor)
@@ -251,7 +253,7 @@ const tick = () =>
       object.mesh.position.copy(object.body.position)
     }
 
-    // Update mixer 
+    // Update mixer (only needed for objects with animation)
     // if(mixer !== null) {
     //   mixer.update(deltaTime)
     // }

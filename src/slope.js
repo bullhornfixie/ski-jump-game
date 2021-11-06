@@ -37,6 +37,10 @@ const texture = new THREE.TextureLoader().load(
 
 // Models 
 
+let getMeshes = null
+
+const loadModels = () => {
+
 const mtlLoader = new MTLLoader()
 
 // Load materials for objects
@@ -54,19 +58,33 @@ mtlLoader.load(
       (object) => {
 
         // Extract snow related objects 
-        const getMeshes = [...object.children]
-        const snowyMeshes = getMeshes.map((m) => {
-          if(m.name.includes('Snow')) {
-            m.position.y = -1
-            m.position.x = -5
-            m.position.z = 0
-            scene.add(m) 
-          }
-        })        
-      }
+        getMeshes = [...object.children]
+
+        addModels({x: -5, y: -1, z: 0})
+
+     }       
     )
+   }
+  )
+ }
+
+const addModels = (data) => {
+  if(getMeshes !== null) {
+    getMeshes.map((m) => {
+
+      if(m.name.includes('Snow')) {
+        m.position.x = data.x
+        m.position.y = data.y
+        m.position.z = data.y
+        scene.add(m)    
+      }
+     }
+    )   
+   }
   }
-)
+
+loadModels()
+
 
 // Physics 
 

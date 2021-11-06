@@ -10,7 +10,7 @@ import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader'
 import { Color } from 'three'
 
-const ballDropPosition = {x: 0, y: 3, z: -30}
+const ballDropPosition = {x: 0, y: 7, z: -30}
 
 // GUI
 const gui = new dat.GUI()
@@ -112,7 +112,7 @@ const defaultContactMaterial = new CANNON.ContactMaterial(
 world.addContactMaterial(defaultContactMaterial)
 world.defaultContactMaterial = defaultContactMaterial
 
-const gradient = 0.03
+const gradient = 0.2
 
 // Floor physics 
 const floorShape = new CANNON.Plane()
@@ -174,6 +174,11 @@ scene.add(floor)
 
 // scene.add(ramp)
 
+let boxRamp = {
+  incline: -0.3, 
+  positionZ: 10
+} 
+
 // BoxRamp 3D
 const ramp = new THREE.Mesh(
   new THREE.BoxBufferGeometry(2, 2, 10), // width / height 
@@ -184,17 +189,17 @@ const ramp = new THREE.Mesh(
   }
  )
 )
-ramp.rotation.set(-0.1, 0, 0)
-ramp.position.y = -0.9
+ramp.rotation.set(boxRamp.incline, 0, 0) // x, y, z
+ramp.position.set(0, -0.9, boxRamp.positionZ) // x, y, z
 scene.add(ramp)
 
 // Box Ramp Physics 
 const boxShape = new CANNON.Box(new CANNON.Vec3(2, 2, 10));
 const boxBody = new CANNON.Body({ mass: 0 });
 boxBody.addShape(boxShape);
-boxBody.position.set(0, -1.8, 0);
+boxBody.position.set(0, -1.8, boxRamp.positionZ);
 
-const axis = new CANNON.Vec3(-0.1, 0, 0)
+const axis = new CANNON.Vec3(boxRamp.incline, 0, 0)
 const angle = Math.PI / 3
 boxBody.quaternion.setFromAxisAngle(axis, angle)
 world.addBody(boxBody);

@@ -8,6 +8,7 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader'
+import { Color } from 'three'
 
 const ballDropPosition = {x: 0, y: 2, z: -30}
 
@@ -32,8 +33,11 @@ const scene = new THREE.Scene()
 
 
 // Axes Helper
-const axesHelper = new THREE.AxesHelper( 5 );
+const axesHelper = new THREE.AxesHelper( 10 );
+axesHelper.setColors('yellow', 'red', 'blue' )
 scene.add( axesHelper );
+
+
 
 // Textures 
 const texture = new THREE.TextureLoader().load(
@@ -65,7 +69,7 @@ mtlLoader.load(
         // Extract snow related objects 
         getMeshes = [...object.children]
 
-        addModels({x: -5, y: -1, z: 0}) // model section 1
+        addModels({x: -3, y: -1, z: 0}) // model section 1
      }       
     )
    }
@@ -87,7 +91,7 @@ const addModels = (data) => {
    }
   }
 
-// loadModels()
+loadModels()
 
 
 // Physics 
@@ -149,15 +153,15 @@ const rampBody = new CANNON.Body(1, 0.5)
 rampBody.mass = 0
 rampBody.addShape(rampShape)
 rampBody.quaternion.setFromAxisAngle(
-  new CANNON.Vec3(-1.2, 0, 0),
+  new CANNON.Vec3(-1.1, 0, 0),
   // rotate floor 180 and incline by 0.01 so ball rolls 
   Math.PI * 0.5 - gradient
 )
 world.addBody(rampBody)
 
-// Ramp 3D physics 
+// Ramp 3D 
 const ramp = new THREE.Mesh(
-  new THREE.PlaneGeometry(1, 1), // width / height 
+  new THREE.PlaneGeometry(4, 30), // width / height 
   new THREE.MeshStandardMaterial({
     color: '#000000',
     metalness: 0.3,
@@ -166,6 +170,10 @@ const ramp = new THREE.Mesh(
   }
  )
 )
+ramp.rotation.x = -1.7
+ramp.rotation.y = 0
+ramp.rotation.z = 0
+
 scene.add(ramp)
 
 

@@ -9,7 +9,8 @@ import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader'
 
-// console.log(CANNON)
+
+const ballDropPosition = {x: 0, y: 2, z: -30}
 
 // GUI
 const gui = new dat.GUI()
@@ -18,9 +19,9 @@ debugObject.createSphere = () => {
     createSphere(
         Math.random() * 0.5,
         {
-          x: (Math.random() - 0.5) * 3,
-          y: 3,
-          z: (Math.random() - 0.5) * 3 
+          x: ballDropPosition.x,
+          y: ballDropPosition.y,
+          z: ballDropPosition.z,
         }
     )
 }
@@ -38,18 +39,30 @@ const texture = new THREE.TextureLoader().load(
 
 const mtlLoader = new MTLLoader()
 
+// Load materials for objects
 mtlLoader.load(
   '/models/Tree/Forest_Assets_obj/Forest Assets.mtl',
   (materials) => {
     materials.preload()
     console.log(materials)
-
+    
+    // Load 3D objects 
     const objLoader = new OBJLoader()
     objLoader.setMaterials( materials )
     objLoader.load(
       '/models/Tree/Forest_Assets_obj/Forest Assets.obj',
       (object) => {
-        scene.add(object)
+
+        // Extract snow related objects 
+        const getMeshes = [...object.children]
+        const snowyMeshes = getMeshes.map((m) => {
+          if(m.name.includes('Snow')) {
+            m.position.y = -1
+            m.position.x = -5
+            m.position.z = 0
+            scene.add(m) 
+          }
+        })        
       }
     )
   }
@@ -75,6 +88,7 @@ const defaultContactMaterial = new CANNON.ContactMaterial(
 world.addContactMaterial(defaultContactMaterial)
 world.defaultContactMaterial = defaultContactMaterial
 
+const gradient = 0.03
 
 // Floor
 const floorShape = new CANNON.Plane()
@@ -84,14 +98,15 @@ floorBody.mass = 0
 floorBody.addShape(floorShape)
 floorBody.quaternion.setFromAxisAngle(
   new CANNON.Vec3(-1, 0, 0),
-  Math.PI * 0.5 - 0.02
+  // rotate floor 180 and incline by 0.01 so ball rolls 
+  Math.PI * 0.5 - gradient
 )
 world.addBody(floorBody)
 
 
 // Floor 
 const floor = new THREE.Mesh(
-    new THREE.PlaneGeometry(15, 20), // width / height 
+    new THREE.PlaneGeometry(15, 100), // width / height 
     new THREE.MeshStandardMaterial({
         color: '#ffffff',
         metalness: 0.3,
@@ -100,7 +115,7 @@ const floor = new THREE.Mesh(
     })
 )
 floor.receiveShadow = true
-floor.rotation.x = - Math.PI * 0.5 - 0.01
+floor.rotation.x = - Math.PI * 0.5 + gradient
 scene.add(floor)
 
 // Lights 
@@ -141,7 +156,7 @@ window.addEventListener('resize', () =>
 
 // Camera 
 const camera = new THREE.PerspectiveCamera(100, sizes.width / sizes.height, 0.1, 100)
-camera.position.set(0, 5, 11)
+camera.position.set(0, 10, 10)
 scene.add(camera)
 
 // Controls
@@ -194,7 +209,11 @@ const createSphere = (radius, position) => {
     })
 }
 
-createSphere(0.5, {x: 0, y: 2, z: -7})
+createSphere(0.5, {
+  x: ballDropPosition.x,
+  y: ballDropPosition.y,
+  z: ballDropPosition.z
+})
 
 // Animate
 const clock = new THREE.Clock()

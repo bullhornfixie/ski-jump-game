@@ -51,7 +51,7 @@ Whilst, importing the model was smooth sailing, the model had no texture or mate
 **Solution** <br>
 I was purely referencing an `OBJ` on the `OBJLoader` but I found there was also an `MTL` file in download folder. What does `MTL` mean? well, it means `material`. Ok! So maybe I  need to load the OBJ and MTL file together? and if this theory is correct how do I do it? 
 
-I found the solution and I now have snow covere trees! :evergreen_tree:
+I found the solution and I now have snow covered trees! :evergreen_tree:
 
 
 ```

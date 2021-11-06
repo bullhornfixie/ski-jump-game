@@ -2,7 +2,7 @@ import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'dat.gui'
-import CANNON from 'cannon'
+import CANNON, { Sphere } from 'cannon'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
@@ -10,7 +10,7 @@ import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader'
 import { Color } from 'three'
 
-const ballDropPosition = {x: 0, y: 2, z: -30}
+const ballDropPosition = {x: 0, y: 7, z: -30}
 
 // GUI
 const gui = new dat.GUI()
@@ -36,8 +36,6 @@ const scene = new THREE.Scene()
 const axesHelper = new THREE.AxesHelper( 10 );
 axesHelper.setColors('yellow', 'red', 'blue' )
 scene.add( axesHelper );
-
-
 
 // Textures 
 const texture = new THREE.TextureLoader().load(
@@ -114,7 +112,7 @@ const defaultContactMaterial = new CANNON.ContactMaterial(
 world.addContactMaterial(defaultContactMaterial)
 world.defaultContactMaterial = defaultContactMaterial
 
-const gradient = 0.03
+const gradient = 0.2
 
 // Floor physics 
 const floorShape = new CANNON.Plane()
@@ -146,35 +144,36 @@ floor.receiveShadow = true
 floor.rotation.x = - Math.PI * 0.5 + gradient
 scene.add(floor)
 
-// Ramp physics
-const rampShape = new CANNON.Plane(1, 0.5)
-const rampBody = new CANNON.Body(1, 0.5)
-// floorBody.material = defaultContactMaterial
-rampBody.mass = 0
-rampBody.addShape(rampShape)
-rampBody.quaternion.setFromAxisAngle(
-  new CANNON.Vec3(-1.1, 0, 0),
-  // rotate floor 180 and incline by 0.01 so ball rolls 
-  Math.PI * 0.5 - gradient
-)
-world.addBody(rampBody)
+// BoxRampSettings
+let boxRamp = {
+  incline: -0.3, 
+  positionZ: 10
+} 
 
-// Ramp 3D 
+// BoxRamp 3D
 const ramp = new THREE.Mesh(
-  new THREE.PlaneGeometry(4, 30), // width / height 
+  new THREE.BoxBufferGeometry(2, 2, 10), // width / height 
   new THREE.MeshStandardMaterial({
     color: '#000000',
     metalness: 0.3,
     roughness: 0.4,
-    map: texture
   }
  )
 )
-ramp.rotation.x = -1.7
-ramp.rotation.y = 0
-ramp.rotation.z = 0
-
+ramp.rotation.set(boxRamp.incline, 0, 0) // x, y, z
+ramp.position.set(0, -0.9, boxRamp.positionZ) // x, y, z
 scene.add(ramp)
+
+// Box Ramp Physics 
+const boxShape = new CANNON.Box(new CANNON.Vec3(2, 2, 10));
+const boxBody = new CANNON.Body({ mass: 0 });
+boxBody.addShape(boxShape);
+boxBody.position.set(0, -1.8, boxRamp.positionZ);
+
+const axis = new CANNON.Vec3(boxRamp.incline, 0, 0)
+const angle = Math.PI / 3
+boxBody.quaternion.setFromAxisAngle(axis, angle)
+world.addBody(boxBody);
 
 
 // Lights 
@@ -214,8 +213,8 @@ window.addEventListener('resize', () =>
 })
 
 // Camera 
-const camera = new THREE.PerspectiveCamera(100, sizes.width / sizes.height, 5, 100)
-camera.position.set(0, 10, 10)
+const camera = new THREE.PerspectiveCamera(100, sizes.width / sizes.height, 1, 75)
+camera.position.set(4.75, 9, 35)
 scene.add(camera)
 
 // Controls

@@ -9,7 +9,6 @@ import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader'
 
-
 const ballDropPosition = {x: 0, y: 2, z: -30}
 
 // GUI
@@ -61,7 +60,7 @@ mtlLoader.load(
         // Extract snow related objects 
         getMeshes = [...object.children]
 
-        addModels({x: -5, y: -1, z: 0})
+        addModels({x: -5, y: -1, z: 0}) // model section 1
      }       
     )
    }
@@ -175,7 +174,7 @@ window.addEventListener('resize', () =>
 })
 
 // Camera 
-const camera = new THREE.PerspectiveCamera(100, sizes.width / sizes.height, 0.1, 100)
+const camera = new THREE.PerspectiveCamera(100, sizes.width / sizes.height, 5, 100)
 camera.position.set(0, 10, 10)
 scene.add(camera)
 

@@ -147,17 +147,17 @@ floor.rotation.x = - Math.PI * 0.5 + gradient
 scene.add(floor)
 
 // Ramp physics
-const rampShape = new CANNON.Plane(1, 0.5)
-const rampBody = new CANNON.Body(1, 0.5)
-// floorBody.material = defaultContactMaterial
-rampBody.mass = 0
-rampBody.addShape(rampShape)
-rampBody.quaternion.setFromAxisAngle(
-  new CANNON.Vec3(-1.1, 0, 0),
-  // rotate floor 180 and incline by 0.01 so ball rolls 
-  Math.PI * 0.5 - gradient
-)
-world.addBody(rampBody)
+// const rampShape = new CANNON.Plane(1, 0.5)
+// const rampBody = new CANNON.Body(1, 0.5)
+// // floorBody.material = defaultContactMaterial
+// rampBody.mass = 0
+// rampBody.addShape(rampShape)
+// rampBody.quaternion.setFromAxisAngle(
+//   new CANNON.Vec3(-1.1, 0, 0),
+//   // rotate floor 180 and incline by 0.01 so ball rolls 
+//   Math.PI * 0.5 - gradient
+// )
+// world.addBody(rampBody)
 
 // Ramp 3D 
 // const ramp = new THREE.Mesh(
@@ -186,14 +186,28 @@ const ramp = new THREE.Mesh(
   }
  )
 )
-ramp.rotation.x = -0.5
+
+// ramp.rotation.x = -0.5
 ramp.rotation.y = 0
 ramp.rotation.z = 0
 
-ramp.position.y = -0.5
+ramp.position.y = -0.9
 
 scene.add(ramp)
 
+// Box Ramp Physics 
+const boxShape = new CANNON.Box(new CANNON.Vec3(2,2,2));
+const boxBody = new CANNON.Body({ mass: 0 });
+boxBody.addShape(boxShape);
+boxBody.position.set(0, -1.8, 0);
+
+// boxBody.quaternion.setFromAxisAngle(
+//     new CANNON.Vec3(0.5, -0.5, 0), null)
+  
+console.log(boxBody)
+
+
+world.addBody(boxBody);
 
 
 // Lights 

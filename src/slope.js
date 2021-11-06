@@ -2,7 +2,7 @@ import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'dat.gui'
-import CANNON from 'cannon'
+import CANNON, { Sphere } from 'cannon'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
@@ -144,36 +144,7 @@ floor.receiveShadow = true
 floor.rotation.x = - Math.PI * 0.5 + gradient
 scene.add(floor)
 
-// Ramp physics
-// const rampShape = new CANNON.Plane(1, 0.5)
-// const rampBody = new CANNON.Body(1, 0.5)
-// // floorBody.material = defaultContactMaterial
-// rampBody.mass = 0
-// rampBody.addShape(rampShape)
-// rampBody.quaternion.setFromAxisAngle(
-//   new CANNON.Vec3(-1.1, 0, 0),
-//   // rotate floor 180 and incline by 0.01 so ball rolls 
-//   Math.PI * 0.5 - gradient
-// )
-// world.addBody(rampBody)
-
-// Ramp 3D 
-// const ramp = new THREE.Mesh(
-//   new THREE.PlaneGeometry(4, 30), // width / height 
-//   new THREE.MeshStandardMaterial({
-//     color: '#000000',
-//     metalness: 0.3,
-//     roughness: 0.4,
-//     map: texture
-//   }
-//  )
-// )
-// ramp.rotation.x = -1.7
-// ramp.rotation.y = 0
-// ramp.rotation.z = 0
-
-// scene.add(ramp)
-
+// BoxRampSettings
 let boxRamp = {
   incline: -0.3, 
   positionZ: 10
@@ -242,8 +213,8 @@ window.addEventListener('resize', () =>
 })
 
 // Camera 
-const camera = new THREE.PerspectiveCamera(100, sizes.width / sizes.height, 5, 100)
-camera.position.set(0, 10, 10)
+const camera = new THREE.PerspectiveCamera(100, sizes.width / sizes.height, 1, 75)
+camera.position.set(4.75, 9, 35)
 scene.add(camera)
 
 // Controls

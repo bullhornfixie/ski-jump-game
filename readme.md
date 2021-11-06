@@ -42,6 +42,18 @@ Boom! ball is at top of slope and rolls down towards camera.
 
 ### Import 3D models to scene 
 
+**Goal**
+I want to import a 3D model of a snow covered tree to scene.
+
+**Problem**
+Whilst, importing the model was smooth sailing, the model had no texture or material but the geometry was fine. Why was this? is it a lighting issue?
+
+**Solution**
+I was purely referencing an `OBJ` on the `OBJLoader` but I found there was also an `MTL` file in download folder. What does `MTL` mean? well, it means `material`. Ok! So maybe I  need to load the OBJ and MTL file together? and if this theory is correct how do I do it? 
+
+I found the solution and I now have snow covere trees! :evergreen_tree:
+
+
 ```
 const mtlLoader = new MTLLoader()
 

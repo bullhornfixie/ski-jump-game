@@ -10,7 +10,7 @@ import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader'
 import { Color } from 'three'
 
-const ballDropPosition = {x: 0, y: 2, z: -30}
+const ballDropPosition = {x: 0, y: 7, z: -30}
 
 // GUI
 const gui = new dat.GUI()
@@ -31,12 +31,10 @@ gui.add(debugObject, 'createSphere')
 const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
 
-
 // Axes Helper
 const axesHelper = new THREE.AxesHelper( 10 );
 axesHelper.setColors('yellow', 'red', 'blue' )
 scene.add( axesHelper );
-
 
 
 // Textures 
@@ -152,11 +150,10 @@ const rampBody = new CANNON.Body(1, 0.5)
 // floorBody.material = defaultContactMaterial
 rampBody.mass = 0
 rampBody.addShape(rampShape)
-rampBody.quaternion.setFromAxisAngle(
-  new CANNON.Vec3(-1.1, 0, 0),
-  // rotate floor 180 and incline by 0.01 so ball rolls 
-  Math.PI * 0.5 - gradient
-)
+rampBody.quaternion.setFromAxisAngle(new CANNON.Vec3(-1.1, 0, 0), Math.PI * 0.5 - gradient)
+// paramters(axis, angle)
+// x = - 1 it is in line with 3D floor
+
 world.addBody(rampBody)
 
 // Ramp 3D 
@@ -170,7 +167,7 @@ const ramp = new THREE.Mesh(
   }
  )
 )
-ramp.rotation.x = -1.7
+ramp.rotation.x = - Math.PI * 0.5 - gradient
 ramp.rotation.y = 0
 ramp.rotation.z = 0
 

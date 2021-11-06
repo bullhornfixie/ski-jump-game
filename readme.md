@@ -86,3 +86,13 @@ This ball will eventually become a 3D skier model or a sledge. Let's see how com
 
 ## Resources 
 [emoji cheatsheet for markdown](https://github.com/ikatyang/emoji-cheat-sheet/blob/master/README.md#sport)
+
+## Notes 
+- Change the `gradient var` but `ball position.y` needs to increase 
+- There could be a black, red, yellow ski slope setting??
+- Cannot see below plane is because there is no light shining on material underneath?
+- Plane in cannon is infinite cannot set a limit 
+- Could a box rotated on x axis give the ramp effect? try with three.js first then cannon.js
+
+- PI = 180 degrees 
+- PI / 2 = 90 degrees 

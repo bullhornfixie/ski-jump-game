@@ -151,7 +151,7 @@ const rampBody = new CANNON.Body(1, 0.5)
 rampBody.mass = 0
 rampBody.addShape(rampShape)
 rampBody.quaternion.setFromAxisAngle(new CANNON.Vec3(-1.1, 0, 0), Math.PI * 0.5 - gradient)
-// paramters(axis, angle)
+// parameters(axis, angle)
 // x = - 1 it is in line with 3D floor
 
 world.addBody(rampBody)

@@ -30,6 +30,11 @@ gui.add(debugObject, 'createSphere')
 const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
 
+
+// Axes Helper
+const axesHelper = new THREE.AxesHelper( 5 );
+scene.add( axesHelper );
+
 // Textures 
 const texture = new THREE.TextureLoader().load(
   './textures/snow-texture.jpg'
@@ -82,7 +87,7 @@ const addModels = (data) => {
    }
   }
 
-loadModels()
+// loadModels()
 
 
 // Physics 
@@ -107,7 +112,7 @@ world.defaultContactMaterial = defaultContactMaterial
 
 const gradient = 0.03
 
-// Floor
+// Floor physics 
 const floorShape = new CANNON.Plane()
 const floorBody = new CANNON.Body()
 // floorBody.material = defaultContactMaterial
@@ -121,7 +126,7 @@ floorBody.quaternion.setFromAxisAngle(
 world.addBody(floorBody)
 
 
-// Floor 
+// Floor 3D
 const floor = new THREE.Mesh(
   new THREE.PlaneGeometry(15, 100), // width / height 
   new THREE.MeshStandardMaterial({
@@ -136,6 +141,33 @@ const floor = new THREE.Mesh(
 floor.receiveShadow = true
 floor.rotation.x = - Math.PI * 0.5 + gradient
 scene.add(floor)
+
+// Ramp physics
+const rampShape = new CANNON.Plane(1, 0.5)
+const rampBody = new CANNON.Body(1, 0.5)
+// floorBody.material = defaultContactMaterial
+rampBody.mass = 0
+rampBody.addShape(rampShape)
+rampBody.quaternion.setFromAxisAngle(
+  new CANNON.Vec3(-1.2, 0, 0),
+  // rotate floor 180 and incline by 0.01 so ball rolls 
+  Math.PI * 0.5 - gradient
+)
+world.addBody(rampBody)
+
+// Ramp 3D physics 
+const ramp = new THREE.Mesh(
+  new THREE.PlaneGeometry(1, 1), // width / height 
+  new THREE.MeshStandardMaterial({
+    color: '#000000',
+    metalness: 0.3,
+    roughness: 0.4,
+    map: texture
+  }
+ )
+)
+scene.add(ramp)
+
 
 // Lights 
 const ambientLight = new THREE.AmbientLight(0xffffff, 1.2)

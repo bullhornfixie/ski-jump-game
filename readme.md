@@ -93,7 +93,7 @@ Thankfully cannon.js has a box and you can set the scale! after much grind I man
 ### Camera follows ball :movie_camera:
 
 **Goal** <br>
-Currently, the game ski slope is short and thus, the game will be short. The camera is fixed in a single position. Som if I make the ski slope longer, the player won't be able to see the skier when it's out of view. 
+Currently, the game ski slope is short and thus, the game will be short. The camera is fixed in a single position. So if I make the ski slope longer, the player won't be able to see the skier when it's out of view. 
 
 I need to extend the length of the plane and get the camera to follow the ball as it rolls down. 
 

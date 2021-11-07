@@ -37,9 +37,9 @@ axesHelper.setColors('yellow', 'red', 'blue' )
 scene.add( axesHelper );
 
 // Textures 
-const texture = new THREE.TextureLoader().load(
-  './textures/snow-texture.jpg'
-)
+const loader = new THREE.TextureLoader();
+  const texture1 = loader.load('./textures/snow-texture.jpg');
+  const texture2 = loader.load('./textures/darkWood-texture.jpg');
 
 // Models 
 let getMeshes = null
@@ -115,7 +115,7 @@ const floor = new THREE.Mesh(
     color: '#ffffff',
     metalness: 0.3,
     roughness: 0.4,
-    map: texture
+    map: texture1
   }
  )
 )
@@ -149,9 +149,10 @@ let boxRamp = {
 const ramp = new THREE.Mesh(
   new THREE.BoxBufferGeometry(2, 2, 25), // width / height 
   new THREE.MeshStandardMaterial({
-    color: '#000000',
+    color: '#ffffff',
     metalness: 0.3,
     roughness: 0.4,
+    map: texture2
   }
  )
 )

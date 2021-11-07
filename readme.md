@@ -106,9 +106,9 @@ With a skewed sense of optimism, I was hoping THREE.js would come packed with an
 I had a theory, to update the `camera.position.z += 0.01` via the tick function, thus updating the camera angle on each frame. Sure enough the result was perfect and gave a really smooth zoom effect! I increased the increment to += 0.10 to keep pace with the ball speed and for it stop zooming when reaches bottom of slope. 
 
 ```
-if (camera.position.z > 65.00) 
-  {camera.position.z = 65.00}
-  console.log(camera.position.z)
+camera.position.z += 0.10 
+  if (camera.position.z > 65.00) 
+     {camera.position.z = 65.00}
 ```
 
 I now needed to return the camera to top of slope when a new a ball is launched via GUI panel. In the debug.createSphere function I added this code to solve problem.

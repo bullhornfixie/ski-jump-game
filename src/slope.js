@@ -111,7 +111,7 @@ const defaultContactMaterial = new CANNON.ContactMaterial(
   defaultMaterial,
   {
     friction: 0.1,
-    restitution: 0.7
+    restitution: 0.2
   }
 )
 world.addContactMaterial(defaultContactMaterial)
@@ -281,6 +281,7 @@ createSphere(0.5, {
   z: ballDropPosition.z
 })
 
+
 // Animate
 const clock = new THREE.Clock()
 let oldElapsedTime = 0 
@@ -303,7 +304,12 @@ const tick = () =>
     // if(mixer !== null) {
     //   mixer.update(deltaTime)
     // }
-    
+
+    // Camera zoom out 
+    camera.position.z += 0.10 
+    if (camera.position.z > 65.00) 
+      { camera.position.z = 65.00 }
+
     // Update controls
     controls.update()
 

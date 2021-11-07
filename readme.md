@@ -105,11 +105,11 @@ This ball will eventually become a 3D skier model or a sledge. Let's see how com
 I want to duplicate models I have already imported and use multiple times in scene - e.g. trees.
 
 **Problem** <br>
-On calling my `addModel` method twice and only one set of objects was appearning and not 2.
+On calling my `addModel` method twice, only 1 set of objects was appearing and not 2.
 
 **Solution** <br>
 - Casting my mind back to a previous project, I wondered if there was an issue with duplicate `uuid's` 
-- Was the newest uuid overwriting previous version 
+- Was the newest uuid overwriting previous version?
 - To test theory, I created a `cloneModel` function and used a three.js method called `clone()`
 - This would create a clone of the object with a unique uuid
 - Sure enough it worked! 

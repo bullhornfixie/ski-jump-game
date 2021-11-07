@@ -17,7 +17,7 @@ const scene = new THREE.Scene()
 // GUI
 const gui = new dat.GUI()
 const debugObject = {}
-const ballDropPosition = {x: 0, y: 7, z: -30} // updates CreateSphere() also
+const ballDropPosition = {x: 0, y: 9, z: -35} // updates CreateSphere() also
 
 debugObject.createSphere = () => {
   createSphere(
@@ -92,7 +92,7 @@ loadModels()
 
 // Physics World
 const world = new CANNON.World()
-world.gravity.set(0, -100, 0) // Vec3 Class is same as Vector3 but for physics
+world.gravity.set(0, -120, 0) // Vec3 Class is same as Vector3 but for physics
 
 // Material 
 const defaultMaterial = new CANNON.Material('default')
@@ -110,7 +110,7 @@ world.defaultContactMaterial = defaultContactMaterial
 
 // Floor 3D
 const floor = new THREE.Mesh(
-  new THREE.PlaneGeometry(15, 100), // width / height 
+  new THREE.PlaneGeometry(25, 150), // width / height 
   new THREE.MeshStandardMaterial({
     color: '#ffffff',
     metalness: 0.3,
@@ -140,13 +140,14 @@ scene.add(floor)
 
 // Box Ramp 
 let boxRamp = {
-  inclineX: -0.3, 
-  positionZ: 10
+  inclineX: -0.2, 
+  positionY: -2,
+  positionZ: 15
 } 
 
 // Box Ramp 3D
 const ramp = new THREE.Mesh(
-  new THREE.BoxBufferGeometry(2, 2, 10), // width / height 
+  new THREE.BoxBufferGeometry(2, 2, 25), // width / height 
   new THREE.MeshStandardMaterial({
     color: '#000000',
     metalness: 0.3,
@@ -155,20 +156,20 @@ const ramp = new THREE.Mesh(
  )
 )
 ramp.rotation.set(boxRamp.inclineX, 0, 0)
-ramp.position.set(0, -0.9, boxRamp.positionZ) 
+ramp.position.set(0, boxRamp.positionY, boxRamp.positionZ) 
 scene.add(ramp)
 
 // Box Ramp Physics 
-const boxShape = new CANNON.Box(new CANNON.Vec3(2, 2, 10));
+const boxShape = new CANNON.Box(new CANNON.Vec3(2, 2, 25));
 const boxBody = new CANNON.Body({ mass: 0 });
-boxBody.addShape(boxShape);
 
-boxBody.position.set(0, -1.8, boxRamp.positionZ);
+boxBody.addShape(boxShape);
+boxBody.position.set(0, boxRamp.positionY, boxRamp.positionZ);
 
 const axis = new CANNON.Vec3(boxRamp.inclineX, 0, 0)
 const angle = Math.PI / 3
-
 boxBody.quaternion.setFromAxisAngle(axis, angle)
+
 world.addBody(boxBody);
 
 

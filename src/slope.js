@@ -28,8 +28,12 @@ debugObject.createSphere = () => {
       z: ballDropPosition.z,
     }
   )
+  // reset camera position to start on new ball launch
+  console.log('new ball')
+  camera.position.set(4.75, 9, 35)
 }
 gui.add(debugObject, 'createSphere')
+
 
 // Axes Helper
 const axesHelper = new THREE.AxesHelper( 10 );
@@ -248,6 +252,7 @@ const sphereMaterial = new THREE.MeshStandardMaterial({
     color: 'hotPink'
 })
 
+
 const createSphere = (radius, position) => {
 
     // THREE.js mesh 
@@ -308,7 +313,9 @@ const tick = () =>
     // Camera zoom out 
     camera.position.z += 0.10 
     if (camera.position.z > 65.00) 
-      { camera.position.z = 65.00 }
+       {camera.position.z = 65.00}
+       console.log(camera.position.z)
+    
 
     // Update controls
     controls.update()

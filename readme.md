@@ -99,6 +99,25 @@ I need to extend the length of the plane and get the camera to follow the ball a
 
 This ball will eventually become a 3D skier model or a sledge. Let's see how complex the modelling is for both options. Main thing is to get the physics working.
 
+**Problem** <br>
+With a skewed sense of optimism, I was hoping THREE.js would come packed with an option for the camera to follow an object. `camera.lookAt()` didn't work on the sphere mesh and based on my research, this wasn't going to be straight forward.
+
+**Solution** <br>
+I had a theory, to update the `camera.position.z += 0.01` via the tick function, thus updating the camera angle on each frame. Sure enough the result was perfect and gave a really smooth zoom effect! I increased the increment to += 0.10 to keep pace with the ball speed and for it stop zooming when reaches bottom of slope. 
+
+```
+if (camera.position.z > 65.00) 
+  {camera.position.z = 65.00}
+  console.log(camera.position.z)
+```
+
+I now needed to return the camera to top of slope when a new a ball is launched via GUI panel. In the debug.createSphere function I added this code to solve problem.
+
+```
+console.log('new ball')
+camera.position.set(4.75, 9, 35)
+```
+
 ### Duplicate 3D Models
 
 **Goal** <br>

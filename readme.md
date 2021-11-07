@@ -75,22 +75,22 @@ mtlLoader.load(
 )
 ```
 
-### Box ramp 
+### Box ramp :package:
 
 **Goal** <br>
 Create a box ramp where the ball rolls along surface and gains air after hitting the lip.
 
 **Prolem** <br>
-There are two worlds in the scene `3D world` and `Physics world` which is invisble. There needs to a parellel universe for each object and this creates problems when you want to build more complex shapes. 
+There are two worlds in the scene `3D world` and `Physics world` which is invisble. There needs to be a parellel universe for each 3D object and this creates problems when you want to build more complex shapes. 
 
-Initially, I thought a plane in `cannon.js` could be a good starting point. It's a flat surface. However, a plane in physics world is infinite so there is no edge. The ball was rolling down the slope and hitting the plane but not dropping off an edge. How could I rememdy this?
+Initially, I thought a plane in `cannon.js` could be a good starting point. It's a flat surface. However, a plane in physics world is infinite with no edge. The ball was rolling down the slope and hitting the plane but not dropping off an edge. How could I rememdy this?
 
 **Solution** <br>
 Could a box, rotated on the x axis, solve the problem? and if I can find a box in the physics library, how would you rotate it on x axis? 
 
 Thankfully cannon.js has a box and you can set the scale! after much grind I managed to align the physics box to my (visible) 3D box and the ball was rolling along, hitting the lip, and gaining some air time...score. 
 
-### Camera follows ball
+### Camera follows ball :movie_camera:
 
 **Goal** <br>
 Currently, the game ski slope is short and thus, the game will be short. The camera is fixed in a single position. Som if I make the ski slope longer, the player won't be able to see the skier when it's out of view. 

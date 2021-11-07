@@ -234,7 +234,7 @@ const sphereGeometry = new THREE.SphereBufferGeometry(1, 20, 20)
 const sphereMaterial = new THREE.MeshStandardMaterial({
     metalness: 0.4,
     roughness: 0.1,
-    color: 'blue'
+    color: 'hotPink'
 })
 
 const createSphere = (radius, position) => {

@@ -92,11 +92,11 @@ const cloneModels = (model, posX, posY, posZ) => {
 
   if(getMeshes !== null) {
 
-  const snowTree = model.clone()
-  snowTree.position.x = posX
-  snowTree.position.y = posY
-  snowTree.position.z = posZ
-  scene.add(snowTree)
+  const copy3DModel = model.clone()
+  copy3DModel.position.x = posX
+  copy3DModel.position.y = posY
+  copy3DModel.position.z = posZ
+  scene.add(copy3DModel)
   }
 }
 

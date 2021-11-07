@@ -99,7 +99,20 @@ I need to extend the length of the plane and get the camera to follow the ball a
 
 This ball will eventually become a 3D skier model or a sledge. Let's see how complex the modelling is for both options. Main thing is to get the physics working.
 
+### Duplicate 3D Models
 
+**Goal** <br>
+I want to duplicate models I have already imported and use multiple times in scene - e.g. trees.
+
+**Problem** <br>
+On calling my `addModel` method twice and only one set of objects was appearning and not 2.
+
+**Solution** <br>
+- Casting my mind back to a previous project, I wondered if there was an issue with duplicate `uuid's` 
+- Was the newest uuid overwriting previous version 
+- To test theory, I created a `cloneModel` function and used a three.js method called `clone()`
+- This would create a clone of the object with a unique uuid
+- Sure enough it worked! 
 
 ## Resources 
 [emoji cheatsheet for markdown](https://github.com/ikatyang/emoji-cheat-sheet/blob/master/README.md#sport)

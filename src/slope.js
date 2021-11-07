@@ -45,8 +45,8 @@ const loader = new THREE.TextureLoader();
   const texture1 = loader.load('./textures/snow-texture.jpg');
   const texture2 = loader.load('./textures/darkWood-texture.jpg');
 
-// Models 
-  const mtlLoader = new MTLLoader()
+// Tree Model 
+const mtlLoader = new MTLLoader()
   let getMeshes = null
 
   // Load materials for objects
@@ -103,6 +103,22 @@ const cloneModels = (model, posX, posY, posZ) => {
   scene.add(copy3DModel)
   }
 }
+
+// Flag Model
+const gltfLoader = new GLTFLoader()
+
+  gltfLoader.load(
+    '/models/Flag/Flag.gltf',
+    (gltf) =>
+    {
+      console.log(gltf)
+
+      gltf.scene.position.set(-9, 0, 14)
+      gltf.scene.rotation.set(0, -5, 0)
+      scene.add(gltf.scene)
+    }
+  )
+
 
 // Physics World
 const world = new CANNON.World()
@@ -251,7 +267,6 @@ const sphereMaterial = new THREE.MeshStandardMaterial({
     roughness: 0.1,
     color: 'hotPink'
 })
-
 
 const createSphere = (radius, position) => {
 

@@ -10,11 +10,14 @@ import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader'
 import { Color } from 'three'
 
-const ballDropPosition = {x: 0, y: 7, z: -30}
+// THREE Scene
+const canvas = document.querySelector('canvas.webgl')
+const scene = new THREE.Scene()
 
 // GUI
 const gui = new dat.GUI()
 const debugObject = {}
+const ballDropPosition = {x: 0, y: 7, z: -30} // updates CreateSphere() also
 
 debugObject.createSphere = () => {
   createSphere(
@@ -28,10 +31,6 @@ debugObject.createSphere = () => {
 }
 gui.add(debugObject, 'createSphere')
 
-const canvas = document.querySelector('canvas.webgl')
-const scene = new THREE.Scene()
-
-
 // Axes Helper
 const axesHelper = new THREE.AxesHelper( 10 );
 axesHelper.setColors('yellow', 'red', 'blue' )
@@ -43,36 +42,35 @@ const texture = new THREE.TextureLoader().load(
 )
 
 // Models 
-
 let getMeshes = null
 
 const loadModels = () => {
 
-const mtlLoader = new MTLLoader()
+  const mtlLoader = new MTLLoader()
 
-// Load materials for objects
-mtlLoader.load(
-  '/models/Tree/Forest_Assets_obj/Forest Assets.mtl',
-  (materials) => {
-    materials.preload()
-    console.log(materials)
-    
-    // Load 3D objects 
-    const objLoader = new OBJLoader()
-    objLoader.setMaterials( materials )
-    objLoader.load(
-      '/models/Tree/Forest_Assets_obj/Forest Assets.obj',
-      (object) => {
+  // Load materials for objects
+  mtlLoader.load(
+    '/models/Tree/Forest_Assets_obj/Forest Assets.mtl',
+    (materials) => {
+      materials.preload()
+      console.log(materials)
+      
+      // Load 3D objects 
+      const objLoader = new OBJLoader()
+      objLoader.setMaterials( materials )
+      objLoader.load(
+        '/models/Tree/Forest_Assets_obj/Forest Assets.obj',
+        (object) => {
 
-        // Extract snow related objects 
-        getMeshes = [...object.children]
+          // Extract snow related objects 
+          getMeshes = [...object.children]
 
-        addModels({x: -3, y: -1, z: 0}) // model section 1
-     }       
-    )
-   }
+          addModels({x: -3, y: -1, z: 0}) // model section 1
+        }       
+      )
+    }
   )
- }
+}
 
 const addModels = (data) => {
   if(getMeshes !== null) {
@@ -92,14 +90,11 @@ const addModels = (data) => {
 loadModels()
 
 
-// Physics 
-
-// World 
+// Physics World
 const world = new CANNON.World()
 world.gravity.set(0, -100, 0) // Vec3 Class is same as Vector3 but for physics
 
-
-// What happens when plastic collides with concrete 
+// Material 
 const defaultMaterial = new CANNON.Material('default')
 const defaultContactMaterial = new CANNON.ContactMaterial(
   defaultMaterial, 
@@ -111,21 +106,6 @@ const defaultContactMaterial = new CANNON.ContactMaterial(
 )
 world.addContactMaterial(defaultContactMaterial)
 world.defaultContactMaterial = defaultContactMaterial
-
-const gradient = 0.2
-
-// Floor physics 
-const floorShape = new CANNON.Plane()
-const floorBody = new CANNON.Body()
-// floorBody.material = defaultContactMaterial
-floorBody.mass = 0
-floorBody.addShape(floorShape)
-floorBody.quaternion.setFromAxisAngle(
-  new CANNON.Vec3(-1, 0, 0),
-  // rotate floor 180 and incline by 0.01 so ball rolls 
-  Math.PI * 0.5 - gradient
-)
-world.addBody(floorBody)
 
 
 // Floor 3D
@@ -140,17 +120,31 @@ const floor = new THREE.Mesh(
  )
 )
 
+// Floor Physics 
+const gradient = 0.2
+
+const floorShape = new CANNON.Plane()
+const floorBody = new CANNON.Body()
+// floorBody.material = defaultContactMaterial
+floorBody.mass = 0
+floorBody.addShape(floorShape)
+floorBody.quaternion.setFromAxisAngle(
+  new CANNON.Vec3(-1, 0, 0),
+  Math.PI * 0.5 - gradient
+)
+world.addBody(floorBody)
+
 floor.receiveShadow = true
 floor.rotation.x = - Math.PI * 0.5 + gradient
 scene.add(floor)
 
-// BoxRampSettings
+// Box Ramp 
 let boxRamp = {
-  incline: -0.3, 
+  inclineX: -0.3, 
   positionZ: 10
 } 
 
-// BoxRamp 3D
+// Box Ramp 3D
 const ramp = new THREE.Mesh(
   new THREE.BoxBufferGeometry(2, 2, 10), // width / height 
   new THREE.MeshStandardMaterial({
@@ -160,18 +154,20 @@ const ramp = new THREE.Mesh(
   }
  )
 )
-ramp.rotation.set(boxRamp.incline, 0, 0) // x, y, z
-ramp.position.set(0, -0.9, boxRamp.positionZ) // x, y, z
+ramp.rotation.set(boxRamp.inclineX, 0, 0)
+ramp.position.set(0, -0.9, boxRamp.positionZ) 
 scene.add(ramp)
 
 // Box Ramp Physics 
 const boxShape = new CANNON.Box(new CANNON.Vec3(2, 2, 10));
 const boxBody = new CANNON.Body({ mass: 0 });
 boxBody.addShape(boxShape);
+
 boxBody.position.set(0, -1.8, boxRamp.positionZ);
 
-const axis = new CANNON.Vec3(boxRamp.incline, 0, 0)
+const axis = new CANNON.Vec3(boxRamp.inclineX, 0, 0)
 const angle = Math.PI / 3
+
 boxBody.quaternion.setFromAxisAngle(axis, angle)
 world.addBody(boxBody);
 

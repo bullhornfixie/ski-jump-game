@@ -42,11 +42,8 @@ const loader = new THREE.TextureLoader();
   const texture2 = loader.load('./textures/darkWood-texture.jpg');
 
 // Models 
-let getMeshes = null
-
-const loadModels = () => {
-
   const mtlLoader = new MTLLoader()
+  let getMeshes = null
 
   // Load materials for objects
   mtlLoader.load(
@@ -65,16 +62,20 @@ const loadModels = () => {
           // Extract snow related objects 
           getMeshes = [...object.children]
 
-          addModels({x: -3, y: -1, z: 0}) // model section 1
+          addModels({x: -3, y: -1, z: 0}) 
+          cloneModels(getMeshes[2], 2, -5, 10)
+          cloneModels(getMeshes[2], 3, -5, 15)
         }       
       )
     }
   )
-}
+
 
 const addModels = (data) => {
+
   if(getMeshes !== null) {
     getMeshes.map((m) => {
+        
 
       if(m.name.includes('Snow')) {
         m.position.x = data.x
@@ -87,8 +88,17 @@ const addModels = (data) => {
    }
   }
 
-loadModels()
+const cloneModels = (model, posX, posY, posZ) => {
 
+  if(getMeshes !== null) {
+
+  const snowTree = model.clone()
+  snowTree.position.x = posX
+  snowTree.position.y = posY
+  snowTree.position.z = posZ
+  scene.add(snowTree)
+  }
+}
 
 // Physics World
 const world = new CANNON.World()
